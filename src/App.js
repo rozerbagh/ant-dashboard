@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import 'antd/dist/antd.css';
+import Router from 'react-router-dom/Router'
+import { routes } from './routes'
+import { Layout } from 'antd';
+import Sidebar from './components/Sidebar/Sidebar'
+import Navbar from './components/Navbar/Navbar'
+import Footer from './components/Footer/Footer'
+import Content from './containers/Layout'
+const App = () => {
 
-function App() {
+  const [collapsed, setCollapsed] = useState(false);
+  const collapsingSidebar = () => {
+    setCollapsed(!collapsed)
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Sidebar routes={routes} collapsed={collapsed} />
+      <Layout className="site-layout">
+        <Navbar toggleSidebar={collapsingSidebar}
+          collapsed={collapsed} />
+        <Content routes={routes} />
+        <Footer />
+      </Layout>
+
+    </Layout>
+
   );
 }
 
